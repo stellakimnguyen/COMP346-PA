@@ -20,7 +20,7 @@ public class comp346pa1driver {
          * TODO : implement all the operations of main class   																					*
          ******************************************************************************************************************************************/
 
-        Network objNetwork = new Network("network");            /* Activate the network */
+        Network objNetwork = new Network();            /* Activate the network */
         objNetwork.start();
         Server objServer1 = new Server("server1");
         objServer1.start();

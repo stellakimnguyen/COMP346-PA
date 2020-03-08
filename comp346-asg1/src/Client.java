@@ -140,7 +140,7 @@ public class Client extends Thread {
         int i = 0;     /* index of transaction array */
 
         while (i < getNumberOfTransactions()) {
-            while (objNetwork.getInBufferStatus().equals("full")) {
+            while (Network.getInBufferStatus().equals("full")) {
                 // /* Alternatively, busy-wait until the network input buffer is available */
 //                 System.out.println("FULL");
                 Thread.yield();
@@ -169,7 +169,7 @@ public class Client extends Thread {
         int i = 0;     /* Index of transaction array */
 
         while (i < getNumberOfTransactions()) {
-            while (objNetwork.getOutBufferStatus().equals("empty")) {
+            while (Network.getOutBufferStatus().equals("empty")) {
                 /* Alternatively, busy-wait until the network output buffer is available */
                 Thread.yield();             // yield the thread until it won't be empty anymore
             }
@@ -191,7 +191,7 @@ public class Client extends Thread {
      * @return String representation
      */
     public String toString() {
-        return ("\n client IP " + objNetwork.getClientIP() + " Connection status" + objNetwork.getClientConnectionStatus() + "Number of transactions " + getNumberOfTransactions());
+        return ("\n client IP " + Network.getClientIP() + " Connection status" + Network.getClientConnectionStatus() + "Number of transactions " + getNumberOfTransactions());
     }
 
     /**
@@ -203,7 +203,7 @@ public class Client extends Thread {
     public void run() {
         Transactions transact = new Transactions();
         long sendClientStartTime, sendClientEndTime, receiveClientStartTime, receiveClientEndTime;
-        objNetwork.connect(objNetwork.getClientIP());
+        Network.connect(Network.getClientIP());
         /* Implement the code for the run method */
         if (this.getClientOperation().equals("sending")) {
             sendClientStartTime = System.currentTimeMillis();
@@ -216,7 +216,7 @@ public class Client extends Thread {
             receiveClientStartTime = System.currentTimeMillis();
             receiveTransactions(transact);
             receiveClientEndTime = System.currentTimeMillis();
-            objNetwork.setClientConnectionStatus("disconnected");
+            Network.setClientConnectionStatus("disconnected");
         }
     }
 }
