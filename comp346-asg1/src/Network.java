@@ -18,8 +18,8 @@ public class Network extends Thread {
     private static int portID;                                 /* Port ID of the client application */
     private static String clientConnectionStatus;              /* Client connection status - connected, disconnected, idle */
     private static String serverConnectionStatus;              /* Server connection status - connected, disconnected, idle */
-    private static Transactions inComingPacket[];              /* Incoming network buffer */
-    private static Transactions outGoingPacket[];              /* Outgoing network buffer */
+    private static Transactions[] inComingPacket;              /* Incoming network buffer */
+    private static Transactions[] outGoingPacket;              /* Outgoing network buffer */
     private static String inBufferStatus, outBufferStatus;     /* Current status of the network buffers - normal, full, empty */
     private static String networkStatus;                       /* Network status - active, inactive */
 
@@ -495,8 +495,8 @@ public class Network extends Thread {
 
     public void run() {
         // System.out.println("\n DEBUG : Network.run() - starting network thread");
-        connect(this.getClientIP());
-        connect(this.getServerIP());
+        connect(getClientIP());
+        connect(getServerIP());
         while (true) {
             /* Implement the code for the run method */
 
@@ -504,8 +504,8 @@ public class Network extends Thread {
                 Thread.yield();
             }
 
-            if ((this.getClientConnectionStatus().equals("disconnected")) &&
-                    this.getServerConnectionStatus().equals("disconnected")) {
+            if ((getClientConnectionStatus().equals("disconnected")) &&
+                    getServerConnectionStatus().equals("disconnected")) {
                 System.exit(0);
             }
         }

@@ -129,7 +129,7 @@ public class Server extends Thread {
     /**
      * Mutator method of Server class
      *
-     * @param tId
+     * @param stid
      * @return
      */
     public void setServerThreadId(String stid) {
@@ -187,9 +187,9 @@ public class Server extends Thread {
         int i = 0;                  /* index of accounts array */
 
         try {
-            inputStream = new Scanner(new FileInputStream("account.txt"));
+            inputStream = new Scanner(new FileInputStream("D:\\Document\\Concordia\\SEMESTERS\\2020-Winter\\COMP-346\\asg2\\COMP346-PA\\comp346-asg1\\account.txt"));
         } catch (FileNotFoundException e) {
-            System.out.println("File account.txt was not found");
+            System.out.println("File account.txt 123 was not found");
             System.out.println("or could not be opened.");
             System.exit(0);
         }
@@ -256,7 +256,7 @@ public class Server extends Thread {
                 }
                 Thread.yield();
             }
-            ;  /* Alternatively, busy-wait until the network input buffer is available */
+            /* Alternatively, busy-wait until the network input buffer is available */
 //            Network.connect(Network.getServerIP());
             if (!Network.getInBufferStatus().equals("empty")) {
                 // System.out.println("\n DEBUG : Server.processTransactions() - transferring in account " + trans.getAccountNumber());
@@ -293,7 +293,7 @@ public class Server extends Thread {
                     Thread.yield();
 //                     System.out.println("\n Outbuffer FULL");
                 }
-                ; /* Alternatively,  busy-wait until the network output buffer is available */
+                /* Alternatively,  busy-wait until the network output buffer is available */
 
                 // System.out.println("\n DEBUG : Server.processTransactions() - transferring out account " + trans.getAccountNumber());
 
@@ -398,19 +398,31 @@ public class Server extends Thread {
      */
     public void run() {
         Transactions trans = new Transactions();
-        long serverStartTime, serverEndTime;
+        long serverStartTime1, serverEndTime1;
+        long serverStartTime2, serverEndTime2;
 
         Network.connect(Network.getServerIP());
-        serverStartTime = System.currentTimeMillis();
-        // System.out.println("\n DEBUG : Server.run() - starting server thread " + Network.getServerConnectionStatus());
-
-        /* Implement the code for the run method */
+        serverStartTime1 = System.currentTimeMillis();
+        serverStartTime2 = System.currentTimeMillis();
 
         processTransactions(trans);
 
-        serverEndTime = System.currentTimeMillis();
-        Network.disconnect(Network.getServerIP());
-        System.out.println("\n Terminating server thread - " + " Running time " + (serverEndTime - serverStartTime) + " milliseconds");
+        if(this.getServerThreadRunningStatus1() == "terminated") {
+            serverEndTime1 = System.currentTimeMillis();
+//            System.out.println("\n\n server1 test");
+            System.out.println("\n Terminating server thread 1 - " + " Running time " + (serverEndTime1 - serverStartTime1) + " milliseconds");
+        }
+        else if(this.getServerThreadRunningStatus2() == "terminated"){
+            serverEndTime2 = System.currentTimeMillis();
+//            System.out.println("\n\n server2 test");
+            System.out.println("\n Terminating server thread 2 - " + " Running time " + (serverEndTime2 - serverStartTime2) + " milliseconds");
+        }
+        
+        if(this.getServerThreadRunningStatus1() == "terminated" &&
+                this.getServerThreadRunningStatus2() == "terminated") {
+            Network.disconnect(Network.getServerIP());
+            System.out.println("\n\n\n TESTSTETEST");
+        }
     }
 }
 

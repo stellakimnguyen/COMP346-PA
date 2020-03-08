@@ -100,7 +100,7 @@ public class Client extends Thread {
         int i = 0;                            /* Index of transactions array */
 
         try {
-            inputStream = new Scanner(new FileInputStream("transaction2.txt"));
+            inputStream = new Scanner(new FileInputStream("D:\\Document\\Concordia\\SEMESTERS\\2020-Winter\\COMP-346\\asg2\\COMP346-PA\\comp346-asg1\\transaction.txt"));
         } catch (FileNotFoundException e) {
             System.out.println("File transaction.txt was not found");
             System.out.println("or could not be opened.");
@@ -146,7 +146,6 @@ public class Client extends Thread {
                 Thread.yield();
 //                 System.out.println("\n Inbuffer FULL");
             }
-            ;
 
             transaction[i].setTransactionStatus("sent");   /* Set current transaction status */
 
@@ -173,7 +172,6 @@ public class Client extends Thread {
                 /* Alternatively, busy-wait until the network output buffer is available */
                 Thread.yield();             // yield the thread until it won't be empty anymore
             }
-            ;
 
             Network.receive(transact);                                /* Receive updated transaction from the network buffer */
 
