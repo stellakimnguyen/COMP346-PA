@@ -22,7 +22,10 @@ public class comp346pa1driver {
 
         Network objNetwork = new Network("network");            /* Activate the network */
         objNetwork.start();
-
+        Server objServer1 = new Server("server1");
+        objServer1.start();
+        Server objServer2 = new Server("server2");
+        objServer1.start();
         Client objClient1 = new Client("sending");              /* Start the sending client */
         objClient1.start();
         Client objClient2 = new Client("receiving");            /* Start the receiving client */
