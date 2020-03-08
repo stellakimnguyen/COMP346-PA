@@ -1,169 +1,154 @@
-package comp346pa2w2020;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
-/**
- * Transactions class
+/** Accounts class
  *
  * @author Kerly Titus
  */
-public class Transactions {
+public class Accounts {
 
-    private String accountNumber;       /* Account number */
-    private String operationType;       /* Operation type : deposit, withdrawal, query */
-    private double transactionAmount;   /* Amount to deposit or withdraw */
-    private double transactionBalance;  /* Account balance after transaction */
-    private String transactionError;    /* Transaction error : NSF, invalid amount, invalind account, none */
-    private String transactionStatus;   /* Current transaction status : pending, sent, received, transferred, done */
+    private String accountNumber;       /* Unique account number */
+    private String accountType;         /* chequing, saving, credit */
+    private String firstName;           /* First name of account holder */
+    private String lastName;            /* Last name of account holder */
+    private double balance;             /* Account balance */
 
     /**
-     * Constructor method of Transactions class
+     * Constructor method of Accounts class
      *
-     * @param
      * @return
+     * @param
      */
-    Transactions() {
+    Accounts()
+    {
         accountNumber = " ";
-        operationType = " ";
-        transactionAmount = 0.00;
-        transactionBalance = 0.00;
-        transactionError = "none";
-        transactionStatus = " ";
+        accountType = " ";
+        firstName = " ";
+        lastName = " ";
+        balance = 0.0;
     }
 
     /**
-     * Accessor method of Transactions class
+     * Accessor method of Accounts class
      *
-     * @param
      * @return accountNumber
+     * @param
      */
-    public String getAccountNumber() {
+    public String getAccountNumber()
+    {
         return accountNumber;
     }
 
     /**
-     * Mutator method of Transactions class
+     * Mutator method of Accounts class
      *
-     * @param accNumber
      * @return
+     * @param accNumber
      */
-    public void setAccountNumber(String accNumber) {
+    public void setAccountNumber(String accNumber)
+    {
         accountNumber = accNumber;
     }
 
     /**
-     * Accessor method of Transactions class
+     * Accessor method of Accounts class
      *
+     * @return accountType
      * @param
-     * @return operationType
      */
-    public String getOperationType() {
-        return operationType;
+    public String getAccountType()
+    {
+        return accountType;
     }
 
     /**
-     * Mutator method of Transactions class
+     * Mutator method of Accounts class
      *
-     * @param opType
      * @return
+     * @param accType
      */
-    public void setOperationType(String opType) {
-        operationType = opType;
+    public void setAccountType(String accType)
+    {
+        accountType = accType;
     }
 
     /**
-     * Accessor method of Transactions class
+     * Accessor method of Accounts class
      *
+     * @return firstName
      * @param
-     * @return transactionAmount
      */
-    public double getTransactionAmount() {
-        return transactionAmount;
+    public String getFirstName()
+    {
+        return firstName;
     }
 
     /**
-     * Mutator method of Transactions class
+     *  Mutator method of Accounts class
      *
-     * @param transmount
      * @return
+     * @param fName
      */
-    public void setTransactionAmount(double transAmount) {
-        transactionAmount = transAmount;
+    public void setFirstName(String fName)
+    {
+        firstName = fName;
     }
 
     /**
-     * Accessor method of Transactions class
+     * Accessor method of Accounts class
      *
+     * @return lastName
      * @param
-     * @return transactionBalance
      */
-    public double getTransactionBalance() {
-        return transactionBalance;
+    public String getLastName()
+    {
+        return lastName;
     }
 
     /**
-     * Mutator method of Transactions class
+     * Mutator method of Accounts class
      *
-     * @param transBalance
      * @return
+     * @param lName
      */
-    public void setTransactionBalance(double transBalance) {
-        transactionBalance = transBalance;
+    public void setLastName(String lName)
+    {
+        lastName = lName;
     }
 
     /**
-     * Accessor method of Transactions class
+     * Accessor method of Accounts class
      *
+     * @return balance
      * @param
-     * @return transactionError
      */
-    public String getTransactionError() {
-        return transactionError;
+    public double getBalance()
+    {
+        return balance;
     }
 
     /**
-     * Mutator method of Transactions class
+     * Mutator method of Accounts class
      *
-     * @param transError
      * @return
+     * @param bal
      */
-    public void setTransactionError(String transError) {
-        transactionError = transError;
+    public void setBalance(double bal)
+    {
+        balance = bal;
     }
 
     /**
-     * Accessor method of Transactions class
-     *
-     * @param
-     * @return transactionStatus
-     */
-    public String getTransactionStatus() {
-        return transactionStatus;
-    }
-
-    /**
-     * Mutator method of Transactions class
-     *
-     * @param transStatus
-     * @return
-     */
-    public void setTransactionStatus(String transStatus) {
-        transactionError = transStatus;
-    }
-
-    /**
-     * Create a String representation based on the Transactions Object
+     * Create a String representation based on the Accounts Object
      *
      * @return String representation
      */
-    public String toString() {
-        return ("\n Account number " + getAccountNumber() + " Account Balance " + getTransactionBalance() + " Message " + getTransactionError());
+    public String toString()
+    {
+        return ("\n Account number " + getAccountNumber() + "Account type " + getAccountType() + "First name " + getFirstName() + "Last Name " + getLastName() + "Balance " + getBalance());
     }
 
 }
-
-
