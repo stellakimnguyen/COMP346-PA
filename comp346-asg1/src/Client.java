@@ -19,9 +19,8 @@ public class Client extends Thread {
 
     private static int numberOfTransactions;        /* Number of transactions to process */
     private static int maxNbTransactions;            /* Maximum number of transactions */
-    private static Transactions[] transaction;    /* Transactions to be processed */
-    private static Network objNetwork;            /* Client object to handle network operations */
-    private String clientOperation;                    /* sending or receiving */
+    private static Transactions[] transaction;            /* Transactions to be processed */
+    private String clientOperation;                /* sending or receiving */
 
     /**
      * Constructor method of Client class
@@ -35,13 +34,12 @@ public class Client extends Thread {
             numberOfTransactions = 0;
             maxNbTransactions = 100;
             transaction = new Transactions[maxNbTransactions];
-            objNetwork = new Network("client");
             clientOperation = operation;
             System.out.println("\n Initializing the transactions ... ");
             readTransactions();
             System.out.println("\n Connecting client to network ...");
-            String cip = objNetwork.getClientIP();
-            if (!(objNetwork.connect(cip))) {
+            String cip = Network.getClientIP();
+            if (!(Network.connect(cip))) {
                 System.out.println("\n Terminating client application, network unavailable");
                 System.exit(0);
             }
@@ -98,11 +96,11 @@ public class Client extends Thread {
      * @return
      */
     public void readTransactions() {
-        Scanner inputStream = null;     /* Transactions input file stream */
-        int i = 0;                      /* Index of transactions array */
+        Scanner inputStream = null;        /* Transactions input file stream */
+        int i = 0;                            /* Index of transactions array */
 
         try {
-            inputStream = new Scanner(new FileInputStream("C:\\Users\\Stella Nguyen .DESKTOP-EP77V4A\\Documents\\UNI\\WINTER 2020\\COMP 346\\Assignments\\comp346-asg1_FINAL\\comp346-asg1\\transaction.txt"));
+            inputStream = new Scanner(new FileInputStream("transaction2.txt"));
         } catch (FileNotFoundException e) {
             System.out.println("File transaction.txt was not found");
             System.out.println("or could not be opened.");
@@ -124,11 +122,12 @@ public class Client extends Thread {
         }
         setNumberOfTransactions(i);        /* Record the number of transactions processed */
 
-       // System.out.println("\n DEBUG : Client.readTransactions() - " + getNumberOfTransactions() + " transactions processed");
+        /* System.out.println("\n DEBUG : Client.readTransactions() - " + getNumberOfTransactions() + " transactions processed"); */
 
         inputStream.close();
 
     }
+
 
     /**
      * Sending the transactions to the server
@@ -136,22 +135,24 @@ public class Client extends Thread {
      * @param
      * @return
      */
+
     public void sendTransactions() {
         int i = 0;     /* index of transaction array */
 
         while (i < getNumberOfTransactions()) {
-             while( objNetwork.getInBufferStatus().equals("full")) {
-                 // /* Alternatively, busy-wait until the network input buffer is available */
+            while (objNetwork.getInBufferStatus().equals("full")) {
+                // /* Alternatively, busy-wait until the network input buffer is available */
 //                 System.out.println("FULL");
-                 Thread.yield();
+                Thread.yield();
 //                 System.out.println("\n Inbuffer FULL");
-             };
+            }
+            ;
 
-             transaction[i].setTransactionStatus("sent");   /* Set current transaction status */
+            transaction[i].setTransactionStatus("sent");   /* Set current transaction status */
 
-           // System.out.println("\n DEBUG : Client.sendTransactions() - sending transaction on account " + transaction[i].getAccountNumber());
+            // System.out.println("\n DEBUG : Client.sendTransactions() - sending transaction on account " + transaction[i].getAccountNumber());
 
-            objNetwork.send(transaction[i]);                            /* Transmit current transaction */
+            Network.send(transaction[i]);                            /* Transmit current transaction */
             i++;
         }
 
@@ -163,26 +164,22 @@ public class Client extends Thread {
      * @param transact
      * @return
      */
+
     public void receiveTransactions(Transactions transact) {
         int i = 0;     /* Index of transaction array */
 
         while (i < getNumberOfTransactions()) {
-             while( objNetwork.getOutBufferStatus().equals("empty")){
-                 /* Alternatively, busy-wait until the network output buffer is available */
-//                 System.out.println(" EMPTY");
-                 Thread.yield();             // yield the thread until it won't be empty anymore
-//                 System.out.println("\n Outbuffer EMPTY");
-             };
-//            while( objNetwork.getInBufferStatus().equals("full")) {
-//                // /* Alternatively, busy-wait until the network input buffer is available */
-//                Thread.yield();
-////                 System.out.println("\n Inbuffer FULL");
-//            };
-            objNetwork.receive(transact);                                /* Receive updated transaction from the network buffer */
+            while (objNetwork.getOutBufferStatus().equals("empty")) {
+                /* Alternatively, busy-wait until the network output buffer is available */
+                Thread.yield();             // yield the thread until it won't be empty anymore
+            }
+            ;
 
-           // System.out.println("\n DEBUG : Client.receiveTransactions() - receiving updated transaction on account " + transact.getAccountNumber());
+            Network.receive(transact);                                /* Receive updated transaction from the network buffer */
 
-            System.out.println(transact);                                /* Display updated transaction */
+            /* System.out.println("\n DEBUG : Client.receiveTransactions() - receiving updated transaction on account " + transact.getAccountNumber()); */
+
+            System.out.println(transact);                               /* Display updated transaction */
             i++;
         }
     }
@@ -208,8 +205,7 @@ public class Client extends Thread {
         long sendClientStartTime, sendClientEndTime, receiveClientStartTime, receiveClientEndTime;
         objNetwork.connect(objNetwork.getClientIP());
         /* Implement the code for the run method */
-        if(this.getClientOperation().equals("sending")) {
-
+        if (this.getClientOperation().equals("sending")) {
             sendClientStartTime = System.currentTimeMillis();
             sendTransactions();
             sendClientEndTime = System.currentTimeMillis();
@@ -220,7 +216,6 @@ public class Client extends Thread {
             receiveClientStartTime = System.currentTimeMillis();
             receiveTransactions(transact);
             receiveClientEndTime = System.currentTimeMillis();
-//            objNetwork.disconnect(objNetwork.getClientIP());
             objNetwork.setClientConnectionStatus("disconnected");
         }
     }
