@@ -4,8 +4,7 @@
  * and open the template in the editor.
  */
 
-/**
- * Transactions class
+/** Transactions class
  *
  * @author Kerly Titus
  */
@@ -18,13 +17,13 @@ public class Transactions {
     private String transactionError;    /* Transaction error : NSF, invalid amount, invalind account, none */
     private String transactionStatus;   /* Current transaction status : pending, sent, received, transferred, done */
 
-    /**
-     * Constructor method of Transactions class
+    /** Constructor method of Transactions class
      *
-     * @param
      * @return
+     * @param
      */
-    Transactions() {
+    Transactions()
+    {
         accountNumber = " ";
         operationType = " ";
         transactionAmount = 0.00;
@@ -34,131 +33,144 @@ public class Transactions {
     }
 
     /**
-     * Accessor method of Transactions class
+     *  Accessor method of Transactions class
      *
-     * @param
      * @return accountNumber
+     * @param
      */
-    public String getAccountNumber() {
+    public String getAccountNumber()
+    {
         return accountNumber;
     }
 
     /**
-     * Mutator method of Transactions class
+     *  Mutator method of Transactions class
      *
-     * @param accNumber
      * @return
+     * @param accNumber
      */
-    public void setAccountNumber(String accNumber) {
+    public void setAccountNumber(String accNumber)
+    {
         accountNumber = accNumber;
     }
 
     /**
-     * Accessor method of Transactions class
+     *  Accessor method of Transactions class
      *
-     * @param
      * @return operationType
+     * @param
      */
-    public String getOperationType() {
+    public String getOperationType()
+    {
         return operationType;
     }
 
     /**
-     * Mutator method of Transactions class
+     *  Mutator method of Transactions class
      *
-     * @param opType
      * @return
+     * @param opType
      */
-    public void setOperationType(String opType) {
+    public void setOperationType(String opType)
+    {
         operationType = opType;
     }
 
     /**
-     * Accessor method of Transactions class
+     *  Accessor method of Transactions class
      *
-     * @param
      * @return transactionAmount
+     * @param
      */
-    public double getTransactionAmount() {
+    public double getTransactionAmount()
+    {
         return transactionAmount;
     }
 
     /**
-     * Mutator method of Transactions class
+     *  Mutator method of Transactions class
      *
-     * @param transAmount
      * @return
+     * @param transmount
      */
-    public void setTransactionAmount(double transAmount) {
+    public void setTransactionAmount(double transAmount)
+    {
         transactionAmount = transAmount;
     }
 
     /**
-     * Accessor method of Transactions class
+     *  Accessor method of Transactions class
      *
-     * @param
      * @return transactionBalance
+     * @param
      */
-    public double getTransactionBalance() {
+    public double getTransactionBalance()
+    {
         return transactionBalance;
     }
 
     /**
-     * Mutator method of Transactions class
+     *  Mutator method of Transactions class
      *
-     * @param transBalance
      * @return
+     * @param transBalance
      */
-    public void setTransactionBalance(double transBalance) {
+    public void setTransactionBalance(double transBalance)
+    {
         transactionBalance = transBalance;
     }
 
     /**
-     * Accessor method of Transactions class
+     *  Accessor method of Transactions class
      *
-     * @param
      * @return transactionError
+     * @param
      */
-    public String getTransactionError() {
+    public String getTransactionError()
+    {
         return transactionError;
     }
 
     /**
      * Mutator method of Transactions class
      *
-     * @param transError
      * @return
+     * @param transError
      */
-    public void setTransactionError(String transError) {
+    public void setTransactionError(String transError)
+    {
         transactionError = transError;
     }
 
     /**
-     * Accessor method of Transactions class
+     *  Accessor method of Transactions class
      *
-     * @param
      * @return transactionStatus
+     * @param
      */
-    public String getTransactionStatus() {
+    public String getTransactionStatus()
+    {
         return transactionStatus;
     }
 
     /**
-     * Mutator method of Transactions class
+     *  Mutator method of Transactions class
      *
-     * @param transStatus
      * @return
+     * @param transStatus
      */
-    public void setTransactionStatus(String transStatus) {
+    public void setTransactionStatus(String transStatus)
+    {
         transactionError = transStatus;
     }
 
     /**
-     * Create a String representation based on the Transactions Object
+     *  Create a String representation based on the Transactions Object
      *
      * @return String representation
      */
-    public String toString() {
+    public String toString()
+    {
         return ("\n Account number " + getAccountNumber() + " Account Balance " + getTransactionBalance() + " Message " + getTransactionError());
     }
 
