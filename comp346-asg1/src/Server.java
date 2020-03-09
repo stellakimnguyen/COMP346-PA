@@ -314,16 +314,16 @@ public class Server extends Thread {
 
         /* Process the accounts until the client disconnects */
         while ((!Network.getClientConnectionStatus().equals("disconnected"))) {
-            if(!Network.getClientConnectionStatus().equals("connected")){
+            if (!Network.getClientConnectionStatus().equals("connected")) {
                 break;
             }
             Network.connect(Network.getServerIP());
-            while((Network.getInBufferStatus().equals("empty"))) {
-                if(!Network.getClientConnectionStatus().equals("connected")){
-                    break;
-                }
-                Thread.yield();
-            };  /* Alternatively, busy-wait until the network input buffer is available */
+//            while((Network.getInBufferStatus().equals("empty"))) {
+//                if(!Network.getClientConnectionStatus().equals("connected")){
+//                    break;
+//                }
+//                Thread.yield();
+//            };  /* Alternatively, busy-wait until the network input buffer is available */
 //            objNetwork.connect(objNetwork.getServerIP());
             if (!Network.getInBufferStatus().equals("empty")) {
                 // System.out.println("\n DEBUG : Server.processTransactions() - transferring in account " + trans.getAccountNumber());
@@ -356,10 +356,10 @@ public class Server extends Thread {
                             // System.out.println("\n DEBUG : Server.processTransactions() - Obtaining balance from account" + trans.getAccountNumber());
                         }
 
-                while((Network.getOutBufferStatus().equals("full"))){
-                    Thread.yield();
-//                     System.out.println("\n Outbuffer FULL");
-                }; /* Alternatively,  busy-wait until the network output buffer is available */
+//                while((Network.getOutBufferStatus().equals("full"))){
+//                    Thread.yield();
+////                     System.out.println("\n Outbuffer FULL");
+//                }; /* Alternatively,  busy-wait until the network output buffer is available */
 
                 // System.out.println("\n DEBUG : Server.processTransactions() - transferring out account " + trans.getAccountNumber());
 
@@ -373,7 +373,7 @@ public class Server extends Thread {
 //                System.out.println("\n TEST2");
 //                break;
 //            }
-            else{
+            else {
                 break;
             }
         }

@@ -4,7 +4,8 @@
  * and open the template in the editor.
  */
 
-/** Accounts class
+/**
+ * Accounts class
  *
  * @author Kerly Titus
  */
@@ -19,11 +20,10 @@ public class Accounts {
     /**
      * Constructor method of Accounts class
      *
-     * @return
      * @param
+     * @return
      */
-    Accounts()
-    {
+    Accounts() {
         accountNumber = " ";
         accountType = " ";
         firstName = " ";
@@ -34,110 +34,100 @@ public class Accounts {
     /**
      * Accessor method of Accounts class
      *
-     * @return accountNumber
      * @param
+     * @return accountNumber
      */
-    public String getAccountNumber()
-    {
+    public String getAccountNumber() {
         return accountNumber;
     }
 
     /**
      * Mutator method of Accounts class
      *
-     * @return
      * @param accNumber
+     * @return
      */
-    public void setAccountNumber(String accNumber)
-    {
+    public void setAccountNumber(String accNumber) {
         accountNumber = accNumber;
     }
 
     /**
      * Accessor method of Accounts class
      *
-     * @return accountType
      * @param
+     * @return accountType
      */
-    public String getAccountType()
-    {
+    public String getAccountType() {
         return accountType;
     }
 
     /**
      * Mutator method of Accounts class
      *
-     * @return
      * @param accType
+     * @return
      */
-    public void setAccountType(String accType)
-    {
+    public void setAccountType(String accType) {
         accountType = accType;
     }
 
     /**
      * Accessor method of Accounts class
      *
-     * @return firstName
      * @param
+     * @return firstName
      */
-    public String getFirstName()
-    {
+    public String getFirstName() {
         return firstName;
     }
 
     /**
-     *  Mutator method of Accounts class
+     * Mutator method of Accounts class
      *
-     * @return
      * @param fName
+     * @return
      */
-    public void setFirstName(String fName)
-    {
+    public void setFirstName(String fName) {
         firstName = fName;
     }
 
     /**
      * Accessor method of Accounts class
      *
-     * @return lastName
      * @param
+     * @return lastName
      */
-    public String getLastName()
-    {
+    public String getLastName() {
         return lastName;
     }
 
     /**
      * Mutator method of Accounts class
      *
-     * @return
      * @param lName
+     * @return
      */
-    public void setLastName(String lName)
-    {
+    public void setLastName(String lName) {
         lastName = lName;
     }
 
     /**
      * Accessor method of Accounts class
      *
-     * @return balance
      * @param
+     * @return balance
      */
-    public double getBalance()
-    {
+    public double getBalance() {
         return balance;
     }
 
     /**
      * Mutator method of Accounts class
      *
-     * @return
      * @param bal
+     * @return
      */
-    public void setBalance(double bal)
-    {
+    public void setBalance(double bal) {
         balance = bal;
     }
 
@@ -146,8 +136,7 @@ public class Accounts {
      *
      * @return String representation
      */
-    public String toString()
-    {
+    public String toString() {
         return ("\n Account number " + getAccountNumber() + "Account type " + getAccountType() + "First name " + getFirstName() + "Last Name " + getLastName() + "Balance " + getBalance());
     }
 
