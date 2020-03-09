@@ -335,6 +335,7 @@ public class Network extends Thread {
     public static boolean send(Transactions inPacket) {
 
         emptyIn.acquire();
+//        fullIn.acquire();
 
         inComingPacket[inputIndexClient].setAccountNumber(inPacket.getAccountNumber());
         inComingPacket[inputIndexClient].setOperationType(inPacket.getOperationType());
@@ -357,6 +358,7 @@ public class Network extends Thread {
         }
 
         fullIn.release();
+//        emptyIn.release();
 
         return true;
     }
@@ -368,7 +370,9 @@ public class Network extends Thread {
      * @return
      */
     public static boolean receive(Transactions outPacket) {
-        fullOut.acquire();
+
+//        fullOut.acquire();
+        emptyOut.acquire();
 
         outPacket.setAccountNumber(outGoingPacket[outputIndexClient].getAccountNumber());
         outPacket.setOperationType(outGoingPacket[outputIndexClient].getOperationType());
@@ -390,7 +394,8 @@ public class Network extends Thread {
             setOutBufferStatus("normal");
         }
 
-        emptyOut.release();
+//        emptyOut.release();
+        fullOut.release();
 
         return true;
     }
@@ -405,7 +410,6 @@ public class Network extends Thread {
     public static boolean transferOut(Transactions outPacket) {
 
         emptyOut.acquire();
-        emptyIn.acquire();
 
         outGoingPacket[inputIndexServer].setAccountNumber(outPacket.getAccountNumber());
         outGoingPacket[inputIndexServer].setOperationType(outPacket.getOperationType());
@@ -428,7 +432,6 @@ public class Network extends Thread {
         }
 
         fullOut.release();
-        fullIn.release();
 
         return true;
     }
@@ -442,7 +445,6 @@ public class Network extends Thread {
     public static boolean transferIn(Transactions inPacket) {
 
         fullIn.acquire();
-        fullOut.acquire();
 
         inPacket.setAccountNumber(inComingPacket[outputIndexServer].getAccountNumber());
         inPacket.setOperationType(inComingPacket[outputIndexServer].getOperationType());
@@ -465,7 +467,6 @@ public class Network extends Thread {
         }
 
         emptyIn.release();
-        emptyOut.release();
 
         return true;
     }

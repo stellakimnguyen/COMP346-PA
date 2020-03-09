@@ -373,9 +373,9 @@ public class Server extends Thread {
 //                System.out.println("\n TEST2");
 //                break;
 //            }
-            else {
-                break;
-            }
+//            else {
+//                break;
+//            }
         }
 
         // System.out.println("\n DEBUG : Server.processTransactions() - " + getNumberOfTransactions() + " accounts updated");
