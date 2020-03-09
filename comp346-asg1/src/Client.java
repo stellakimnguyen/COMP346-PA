@@ -102,7 +102,7 @@ public class Client extends Thread {
         int i = 0;                      /* Index of transactions array */
 
         try {
-            inputStream = new Scanner(new FileInputStream("C:\\Users\\Stella Nguyen .DESKTOP-EP77V4A\\Documents\\UNI\\WINTER 2020\\COMP 346\\Assignments\\comp346-asg1_FINAL\\comp346-asg1\\transaction.txt"));
+            inputStream = new Scanner(new FileInputStream("D:\\Document\\Concordia\\SEMESTERS\\2020-Winter\\COMP-346\\asg2\\COMP346-PA\\comp346-asg1\\transaction.txt"));
         } catch (FileNotFoundException e) {
             System.out.println("File transaction.txt was not found");
             System.out.println("or could not be opened.");
