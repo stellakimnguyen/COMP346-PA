@@ -326,7 +326,9 @@ public class Server extends Thread {
     public double deposit(int i, double amount) {
         double curBalance;      /* Current account balance */
 
-        curBalance = account[i].getBalance();          /* Get current account balance */
+        synchronized (this){ // synchronized statements
+            curBalance = account[i].getBalance();          /* Get current account balance */
+        }
 
         /* NEW : A server thread is blocked before updating the 10th , 20th, ... 70th account balance in order to simulate an inconsistency situation */
         if (((i + 1) % 10) == 0) {
@@ -352,7 +354,9 @@ public class Server extends Thread {
     public double withdraw(int i, double amount) {
         double curBalance;      /* Current account balance */
 
-        curBalance = account[i].getBalance();          /* Get current account balance */
+        synchronized (this) {
+            curBalance = account[i].getBalance();          /* Get current account balance */
+        }
 
         System.out.println("\n DEBUG : Server.withdraw - " + "i " + i + " Current balance " + curBalance + " Amount " + amount + " " + getServerThreadId());
 
@@ -370,7 +374,9 @@ public class Server extends Thread {
     public double query(int i) {
         double curBalance;      /* Current account balance */
 
-        curBalance = account[i].getBalance();          /* Get current account balance */
+        synchronized (this){
+            curBalance = account[i].getBalance();          /* Get current account balance */
+        }
 
         System.out.println("\n DEBUG : Server.query - " + "i " + i + " Current balance " + curBalance + " " + getServerThreadId());
 
