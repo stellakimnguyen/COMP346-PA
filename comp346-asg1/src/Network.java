@@ -23,6 +23,13 @@ public class Network extends Thread {
     private static String inBufferStatus, outBufferStatus;     /* Current status of the network buffers - normal, full, empty */
     private static String networkStatus;                       /* Network status - active, inactive */
 
+    // semaphores
+    private Semaphore mutex;
+    private Semaphore fullIn;
+    private Semaphore fullOut;
+    private Semaphore emptyIn;
+    private Semaphore emptyOut;
+
     /**
      * Constructor of the Network class
      *
@@ -53,6 +60,12 @@ public class Network extends Thread {
         outputIndexClient = 0;
 
         networkStatus = "active";
+
+        mutex = new Semaphore(1);
+        fullIn  = new Semaphore(0);
+        fullOut  = new Semaphore(0);
+        emptyIn = new Semaphore(inComingPacket.length);
+        emptyOut = new Semaphore(outGoingPacket.length);
     }
 
     /**

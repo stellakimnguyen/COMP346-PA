@@ -310,8 +310,8 @@ public class Server extends Thread {
      * @param i, amount
      * @return balance
      */
-    public double deposit(int i, double amount) {
-        synchronized (depositLOCK) { // synchronized statements
+    public synchronized double deposit(int i, double amount) {
+//        synchronized (depositLOCK) { // synchronized statements
             double curBalance;      /* Current account balance */
 
             curBalance = account[i].getBalance();          /* Get current account balance */
@@ -326,7 +326,7 @@ public class Server extends Thread {
             System.out.println("\n DEBUG : Server.deposit - " + "i " + i + " Current balance " + curBalance + " Amount " + amount + " " + getServerThreadId());
             account[i].setBalance(curBalance + amount);     /* Deposit amount in the account */
             return account[i].getBalance();                /* Return updated account balance */
-        }
+//        }
     }
 
     /**
@@ -335,9 +335,9 @@ public class Server extends Thread {
      * @param i, amount
      * @return balance
      */
-    public double withdraw(int i, double amount) {
+    public synchronized double withdraw(int i, double amount) {
 
-        synchronized (withdrawLOCK) {
+//        synchronized (withdrawLOCK) {
             double curBalance;      /* Current account balance */
 
             curBalance = account[i].getBalance();          /* Get current account balance */
@@ -346,7 +346,7 @@ public class Server extends Thread {
 
             account[i].setBalance(curBalance - amount);     /* Withdraw amount in the account */
             return account[i].getBalance();                /* Return updated account balance */
-        }
+//        }
     }
 
     /**
@@ -355,15 +355,15 @@ public class Server extends Thread {
      * @param i
      * @return balance
      */
-    public double query(int i) {
-        synchronized (queryLOCK) {
+    public synchronized double query(int i) {
+//        synchronized (queryLOCK) {
             double curBalance;      /* Current account balance */
 
             curBalance = account[i].getBalance();          /* Get current account balance */
             System.out.println("\n DEBUG : Server.query - " + "i " + i + " Current balance " + curBalance + " " + getServerThreadId());
 
             return curBalance;                              /* Return current account balance */
-        }
+//        }
     }
 
     /**
@@ -389,7 +389,6 @@ public class Server extends Thread {
         Transactions trans = new Transactions();
         long serverStartTime1, serverEndTime1;
         long serverStartTime2, serverEndTime2;
-
 
         serverStartTime2 = System.currentTimeMillis();
 
