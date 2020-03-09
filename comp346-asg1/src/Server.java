@@ -249,7 +249,7 @@ public class Server extends Thread {
             if (!Network.getClientConnectionStatus().equals("connected")) {
                 break;
             }
-            Network.connect(Network.getServerIP());
+//            Network.connect(Network.getServerIP());
             while ((Network.getInBufferStatus().equals("empty"))) {
                 if (!Network.getClientConnectionStatus().equals("connected")) {
                     break;
@@ -401,27 +401,34 @@ public class Server extends Thread {
         long serverStartTime1, serverEndTime1;
         long serverStartTime2, serverEndTime2;
 
-        Network.connect(Network.getServerIP());
-        serverStartTime1 = System.currentTimeMillis();
+
         serverStartTime2 = System.currentTimeMillis();
 
-        processTransactions(trans);
-
-        if(this.getServerThreadRunningStatus1() == "terminated") {
+        if(this.getServerThreadId().equals("server1")){
+            Network.connect(Network.getServerIP());
+            serverStartTime1 = System.currentTimeMillis();
+            System.out.println("\n DEBUG : Server.run() - starting server thread " + getServerThreadId() + " " + Network.getServerConnectionStatus());
+            this.processTransactions(trans);
             serverEndTime1 = System.currentTimeMillis();
-//            System.out.println("\n\n server1 test");
             System.out.println("\n Terminating server thread 1 - " + " Running time " + (serverEndTime1 - serverStartTime1) + " milliseconds");
+            this.setServerThreadRunningStatus1("terminated");
         }
-        else if(this.getServerThreadRunningStatus2() == "terminated"){
+        // server 2
+        else{
+            Network.connect(Network.getServerIP());
+            serverStartTime2 = System.currentTimeMillis();
+            System.out.println("\n DEBUG : Server.run() - starting server thread " + getServerThreadId() + " " + Network.getServerConnectionStatus());
+            this.processTransactions(trans);
             serverEndTime2 = System.currentTimeMillis();
-//            System.out.println("\n\n server2 test");
             System.out.println("\n Terminating server thread 2 - " + " Running time " + (serverEndTime2 - serverStartTime2) + " milliseconds");
-        }
-        
-        if(this.getServerThreadRunningStatus1() == "terminated" &&
-                this.getServerThreadRunningStatus2() == "terminated") {
-            Network.disconnect(Network.getServerIP());
-            System.out.println("\n\n\n TESTSTETEST");
+            this.setServerThreadRunningStatus2("terminated");
+            while(true){
+                if(getServerThreadRunningStatus1().equals("terminated") &&
+                    getServerThreadRunningStatus2().equals("terminated")) {
+                        Network.disconnect(Network.getServerIP());
+                        break;
+                }
+            }
         }
     }
 }
