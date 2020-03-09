@@ -18,6 +18,9 @@ import java.util.Scanner;
 
 public class Server extends Thread {
 
+    private final static String depositLOCK = new String("depositLOCK");
+    private final static String withdrawLOCK = new String("withdrawLOCK");
+    private final static String queryLOCK = new String("queryLOCK");
     /* NEW : Shared member variables are now static for the 2 receiving threads */
     private static int numberOfTransactions;            /* Number of transactions handled by the server */
     private static int numberOfAccounts;                /* Number of accounts stored in the server */
@@ -27,10 +30,6 @@ public class Server extends Thread {
     private static String serverThreadRunningStatus2;     /* Running status of thread 2 - idle, running, terminated */
     /* NEW : member variabes to be used in PA2 with appropriate accessor and mutator methods */
     private String serverThreadId;                 /* Identification of the two server threads - Thread1, Thread2 */
-    private final static String depositLOCK = new String("depositLOCK");
-    private final static String withdrawLOCK = new String("withdrawLOCK");
-    private final static String queryLOCK = new String("queryLOCK");
-
 
 
     /**
@@ -247,22 +246,12 @@ public class Server extends Thread {
         int accIndex;                /* Index position of account to update */
         double newBalance;        /* Updated account balance */
 
-//        Network.connect(Network.getServerIP());
+        // System.out.println("\n DEBUG : Server.processTransactions() " + getServerThreadId() );
 
         /* Process the accounts until the client disconnects */
         while ((!Network.getClientConnectionStatus().equals("disconnected"))) {
-            if (!Network.getClientConnectionStatus().equals("connected")) {
-                break;
-            }
-//            Network.connect(Network.getServerIP());
-            while ((Network.getInBufferStatus().equals("empty"))) {
-                if (!Network.getClientConnectionStatus().equals("connected")) {
-                    break;
-                }
-                Thread.yield();
-            }
-            /* Alternatively, busy-wait until the network input buffer is available */
-//            Network.connect(Network.getServerIP());
+            /* while( (Network.getInBufferStatus().equals("empty"))); */  /* Alternatively, busy-wait until the network input buffer is available */
+
             if (!Network.getInBufferStatus().equals("empty")) {
                 // System.out.println("\n DEBUG : Server.processTransactions() - transferring in account " + trans.getAccountNumber());
 
@@ -290,37 +279,30 @@ public class Server extends Thread {
                             newBalance = query(accIndex);
                             trans.setTransactionBalance(newBalance);
                             trans.setTransactionStatus("done");
-
                             // System.out.println("\n DEBUG : Server.processTransactions() - Obtaining balance from account" + trans.getAccountNumber());
                         }
 
                 while ((Network.getOutBufferStatus().equals("full"))) {
+                    // Yield if output buffer is full
                     Thread.yield();
-//                     System.out.println("\n Outbuffer FULL");
+                    /* Alternatively,  busy-wait until the network output buffer is available */
                 }
-                /* Alternatively,  busy-wait until the network output buffer is available */
 
                 // System.out.println("\n DEBUG : Server.processTransactions() - transferring out account " + trans.getAccountNumber());
 
                 Network.transferOut(trans);                                    /* Transfer a completed transaction from the server to the network output buffer */
                 setNumberOfTransactions((getNumberOfTransactions() + 1));    /* Count the number of transactions processed */
-            }
-//            else if(!Network.getClientConnectionStatus().equals("connected")){
-////                Network.setClientConnectionStatus("disconnected");
-////                Network.setServerConnectionStatus("disconnected");
-////                Thread.yield();
-//                System.out.println("\n TEST2");
-//                break;
-//            }
-            else {
-                break;
+            } else {
+                // Yield if input buffer is empty
+                Thread.yield();
             }
         }
 
-        // System.out.println("\n DEBUG : Server.processTransactions() - " + getNumberOfTransactions() + " accounts updated");
-//        Network.disconnect(Network.getServerIP());
+        System.out.println("\n DEBUG : Server.processTransactions() - " + getNumberOfTransactions() + " accounts updated");
+
         return true;
     }
+
 
     /**
      * Processing of a deposit operation in an account
@@ -329,7 +311,7 @@ public class Server extends Thread {
      * @return balance
      */
     public double deposit(int i, double amount) {
-        synchronized (depositLOCK){ // synchronized statements
+        synchronized (depositLOCK) { // synchronized statements
             double curBalance;      /* Current account balance */
 
             curBalance = account[i].getBalance();          /* Get current account balance */
@@ -374,7 +356,7 @@ public class Server extends Thread {
      * @return balance
      */
     public double query(int i) {
-        synchronized (queryLOCK){
+        synchronized (queryLOCK) {
             double curBalance;      /* Current account balance */
 
             curBalance = account[i].getBalance();          /* Get current account balance */
@@ -411,7 +393,7 @@ public class Server extends Thread {
 
         serverStartTime2 = System.currentTimeMillis();
 
-        if(this.getServerThreadId().equals("server1")){
+        if (this.getServerThreadId().equals("server1")) {
             Network.connect(Network.getServerIP());
             serverStartTime1 = System.currentTimeMillis();
             System.out.println("\n DEBUG : Server.run() - starting server thread " + getServerThreadId() + " " + Network.getServerConnectionStatus());
@@ -421,7 +403,7 @@ public class Server extends Thread {
             this.setServerThreadRunningStatus1("terminated");
         }
         // server 2
-        else{
+        else {
             Network.connect(Network.getServerIP());
             serverStartTime2 = System.currentTimeMillis();
             System.out.println("\n DEBUG : Server.run() - starting server thread " + getServerThreadId() + " " + Network.getServerConnectionStatus());
@@ -429,11 +411,11 @@ public class Server extends Thread {
             serverEndTime2 = System.currentTimeMillis();
             System.out.println("\n Terminating server thread 2 - " + " Running time " + (serverEndTime2 - serverStartTime2) + " milliseconds");
             this.setServerThreadRunningStatus2("terminated");
-            while(true){
-                if(getServerThreadRunningStatus1().equals("terminated") &&
-                    getServerThreadRunningStatus2().equals("terminated")) {
-                        Network.disconnect(Network.getServerIP());
-                        break;
+            while (true) {
+                if (getServerThreadRunningStatus1().equals("terminated") &&
+                        getServerThreadRunningStatus2().equals("terminated")) {
+                    Network.disconnect(Network.getServerIP());
+                    break;
                 }
             }
         }

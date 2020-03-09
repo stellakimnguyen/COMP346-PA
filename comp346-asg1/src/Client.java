@@ -136,10 +136,31 @@ public class Client extends Thread {
      * @return
      */
 
+//    public void sendTransactions() {
+//        int i = 0;     /* index of transaction array */
+//
+//        while (i < getNumberOfTransactions()) {
+//            while (Network.getInBufferStatus().equals("full")) {
+//                // /* Alternatively, busy-wait until the network input buffer is available */
+////                 System.out.println("FULL");
+//                Thread.yield();
+////                 System.out.println("\n Inbuffer FULL");
+//            }
+//
+//            transaction[i].setTransactionStatus("sent");   /* Set current transaction status */
+//
+//            // System.out.println("\n DEBUG : Client.sendTransactions() - sending transaction on account " + transaction[i].getAccountNumber());
+//
+//            Network.send(transaction[i]);                            /* Transmit current transaction */
+//            i++;
+//        }
+//
+//    }
     public void sendTransactions() {
         int i = 0;     /* index of transaction array */
 
         while (i < getNumberOfTransactions()) {
+
             while (Network.getInBufferStatus().equals("full")) {
                 // /* Alternatively, busy-wait until the network input buffer is available */
 //                 System.out.println("FULL");
@@ -149,7 +170,7 @@ public class Client extends Thread {
 
             transaction[i].setTransactionStatus("sent");   /* Set current transaction status */
 
-            // System.out.println("\n DEBUG : Client.sendTransactions() - sending transaction on account " + transaction[i].getAccountNumber());
+            /* System.out.println("\n DEBUG : Client.sendTransactions() - sending transaction on account " + transaction[i].getAccountNumber()); */
 
             Network.send(transaction[i]);                            /* Transmit current transaction */
             i++;
@@ -164,6 +185,23 @@ public class Client extends Thread {
      * @return
      */
 
+//    public void receiveTransactions(Transactions transact) {
+//        int i = 0;     /* Index of transaction array */
+//
+//        while (i < getNumberOfTransactions()) {
+//            while (Network.getOutBufferStatus().equals("empty")) {
+//                /* Alternatively, busy-wait until the network output buffer is available */
+//                Thread.yield();             // yield the thread until it won't be empty anymore
+//            }
+//
+//            Network.receive(transact);                                /* Receive updated transaction from the network buffer */
+//
+//            /* System.out.println("\n DEBUG : Client.receiveTransactions() - receiving updated transaction on account " + transact.getAccountNumber()); */
+//
+//            System.out.println(transact);                               /* Display updated transaction */
+//            i++;
+//        }
+//    }
     public void receiveTransactions(Transactions transact) {
         int i = 0;     /* Index of transaction array */
 
@@ -181,6 +219,7 @@ public class Client extends Thread {
             i++;
         }
     }
+
 
     /**
      * Create a String representation based on the Client Object
