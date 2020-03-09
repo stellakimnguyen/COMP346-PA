@@ -468,8 +468,6 @@ public class Server extends Thread {
         long serverStartTime1, serverEndTime1;
         long serverStartTime2, serverEndTime2;
 
-        serverStartTime2 = System.currentTimeMillis();
-
         if (this.getServerThreadId().equals("server1")) {
             Network.connect(Network.getServerIP());
             serverStartTime1 = System.currentTimeMillis();
@@ -481,6 +479,7 @@ public class Server extends Thread {
             while (true) {
                 if (getServerThreadRunningStatus1().equals("terminated") &&
                         getServerThreadRunningStatus2().equals("terminated")) {
+//                    System.out.println("\n OH OH ");
                     Network.disconnect(Network.getServerIP());
                     break;
                 }
@@ -498,6 +497,7 @@ public class Server extends Thread {
             while (true) {
                 if (getServerThreadRunningStatus1().equals("terminated") &&
                         getServerThreadRunningStatus2().equals("terminated")) {
+//                    System.out.println("\n AH AH ");
                     Network.disconnect(Network.getServerIP());
                     break;
                 }

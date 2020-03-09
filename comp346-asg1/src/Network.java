@@ -62,8 +62,8 @@ public class Network extends Thread {
         // semaphores
         fullIn = new Semaphore(0);
         fullOut = new Semaphore(0);
-        emptyIn = new Semaphore(inComingPacket.length); // should be length 10
-        emptyOut = new Semaphore(outGoingPacket.length); // should be length 10
+        emptyIn = new Semaphore(10); // should be length of inComingPacket array of transactions
+        emptyOut = new Semaphore(10); // should be length of outGoingPacket array of transactions
     }
 
     /**
@@ -405,6 +405,7 @@ public class Network extends Thread {
     public static boolean transferOut(Transactions outPacket) {
 
         emptyOut.acquire();
+        emptyIn.acquire();
 
         outGoingPacket[inputIndexServer].setAccountNumber(outPacket.getAccountNumber());
         outGoingPacket[inputIndexServer].setOperationType(outPacket.getOperationType());
@@ -427,6 +428,7 @@ public class Network extends Thread {
         }
 
         fullOut.release();
+        fullIn.release();
 
         return true;
     }
@@ -440,6 +442,7 @@ public class Network extends Thread {
     public static boolean transferIn(Transactions inPacket) {
 
         fullIn.acquire();
+        fullOut.acquire();
 
         inPacket.setAccountNumber(inComingPacket[outputIndexServer].getAccountNumber());
         inPacket.setOperationType(inComingPacket[outputIndexServer].getOperationType());
@@ -462,6 +465,7 @@ public class Network extends Thread {
         }
 
         emptyIn.release();
+        emptyOut.release();
 
         return true;
     }
