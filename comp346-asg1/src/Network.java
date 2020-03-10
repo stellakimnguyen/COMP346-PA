@@ -409,7 +409,7 @@ public class Network extends Thread {
      */
     public static boolean transferOut(Transactions outPacket) {
 
-        emptyOut.acquire();
+        fullOut.acquire();
 
         try {
             outGoingPacket[inputIndexServer].setAccountNumber(outPacket.getAccountNumber());
@@ -433,6 +433,7 @@ public class Network extends Thread {
             }
         } finally {
             fullOut.release();
+            emptyOut.release();
 
             return true;
         }
@@ -470,6 +471,7 @@ public class Network extends Thread {
             }
 
         } finally {
+            fullIn.release();
             emptyIn.release();
             return true;
         }
