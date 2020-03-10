@@ -378,7 +378,7 @@ public class Server extends Thread {
             }
         }
 
-        // System.out.println("\n DEBUG : Server.processTransactions() - " + getNumberOfTransactions() + " accounts updated");
+         System.out.println("\n DEBUG : Server.processTransactions() - " + getNumberOfTransactions() + " accounts updated");
 //        objNetwork.disconnect(objNetwork.getServerIP());
         return true;
     }
@@ -476,13 +476,13 @@ public class Server extends Thread {
             serverEndTime1 = System.currentTimeMillis();
             System.out.println("\n Terminating server thread 1 - " + " Running time " + (serverEndTime1 - serverStartTime1) + " milliseconds");
             this.setServerThreadRunningStatus1("terminated");
-            while (true) {
-                if (getServerThreadRunningStatus1().equals("terminated") &&
-                        getServerThreadRunningStatus2().equals("terminated")) {
-                    Network.disconnect(Network.getServerIP());
-                    break;
-                }
-            }
+//            while (true) {
+//                if (getServerThreadRunningStatus1().equals("terminated") &&
+//                        getServerThreadRunningStatus2().equals("terminated")) {
+//                    Network.disconnect(Network.getServerIP());
+//                    break;
+//                }
+//            }
         }
         // server 2
         else {
@@ -494,8 +494,7 @@ public class Server extends Thread {
             System.out.println("\n Terminating server thread 2 - " + " Running time " + (serverEndTime2 - serverStartTime2) + " milliseconds");
             this.setServerThreadRunningStatus2("terminated");
             while (true) {
-                if (getServerThreadRunningStatus1().equals("terminated") &&
-                        getServerThreadRunningStatus2().equals("terminated")) {
+                if (getServerThreadRunningStatus1().equals("terminated")) {
                     Network.disconnect(Network.getServerIP());
                     break;
                 }
